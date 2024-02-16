@@ -22,7 +22,6 @@ app.use(
 
 const config = require("./config")(app);
 
-// 👇 Start handling routes here
 const indexRoutes = require("./routes/index.routes");
 app.use("/api", indexRoutes);
 
@@ -30,12 +29,11 @@ const authRoutes = require("./routes/auth.routes");
 app.use("/auth", authRoutes);
 
 const babyRoutes = require("./routes/baby.routes")
-app.use("/api", babyRoutes) //ADD ISAUTHENTICATED
+app.use("/api", isAuthenticated, babyRoutes) //ADD ISAUTHENTICATED
 
 const eventRoutes = require("./routes/event.routes")
 app.use("/api", eventRoutes) //ADD ISAUTHENTICATED
 
-// ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require("./error-handling")(app);
 
 module.exports = app;

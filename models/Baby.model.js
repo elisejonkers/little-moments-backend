@@ -5,15 +5,15 @@ const babySchema = new Schema(
   {
     name: {
       type: String,
-      required: true
+      required: [true, "Name of baby is required"]
     },
     dateOfBirth: {
         type: Date,
-        required: true
+        required: [true, "Date of birth is required"]
     }, 
     place: {
         type: String, 
-        required: true
+        required: [true, "Place of baby is required"]
     }, 
     // time: {
     //     is this going to be necessary, or is the dateOfBirth enough?
