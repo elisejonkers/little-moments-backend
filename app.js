@@ -29,10 +29,10 @@ const authRoutes = require("./routes/auth.routes");
 app.use("/auth", authRoutes);
 
 const babyRoutes = require("./routes/baby.routes")
-app.use("/api", isAuthenticated, babyRoutes) //ADD ISAUTHENTICATED
+app.use("/api", isAuthenticated, babyRoutes) 
 
 const eventRoutes = require("./routes/event.routes")
-app.use("/api", eventRoutes) //ADD ISAUTHENTICATED
+app.use("/api", isAuthenticated, eventRoutes)
 
 require("./error-handling")(app);
 

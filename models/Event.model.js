@@ -6,22 +6,21 @@ const eventSchema = new Schema(
     category: {
       type: String,
       enum: ["Motor development", "Social development", "Language development", "Sensory development", "Other"],
-      required: true
+      required: [true, "Category is required"]
     },
     title: {
       type: String,
-      required: true
+      required: [true, "Title is required"]
     },
     date: {
       type: Date,
-      required: true, 
+      required: [true, "Date is required"],
       default: Date.now
     },
     description: {
       type: String,
-      required: true,
+      required: [true, "Description is required"],
       maxLength: 1000
-
     }, 
     // Add the option to add a picture??
     createdBy: {
