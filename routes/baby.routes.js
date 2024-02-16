@@ -5,7 +5,6 @@ router.get("/babies", (req, res, next) => {
     console.log("this is babies", req.payload)
     Baby.find({}) //ADD CREATED BY USER
     .then((babiesArr) => {
-        console.log("This is all babies", babiesArr)
         res.status(200).json(babiesArr)
     })
     .catch((error) => {
