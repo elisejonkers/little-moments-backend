@@ -1,7 +1,7 @@
 const { Schema, model } = require("mongoose");
 const mongoose = require("mongoose");
 
-const babySchema = new Schema(
+const albumSchema = new Schema(
   {
     name: {
       type: String,
@@ -36,6 +36,6 @@ const babySchema = new Schema(
   }
 );
 
-const Baby = model("Baby", babySchema);
+const Album = model("Album", albumSchema);
 
-module.exports = Baby
+module.exports = Album

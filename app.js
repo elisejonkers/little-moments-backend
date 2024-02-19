@@ -4,10 +4,10 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 
-const originUrl = process.env.ORIGIN || "http://localhost:5173";
+const originUrl = process.env.ORIGIN || "http://localhost:3000";
 
 const User = require("./models/User.model");
-const Baby = require("./models/Baby.model");
+const Album = require("./models/Album.model");
 const Event = require("./models/Event.model");
 
 const { isAuthenticated } = require("./middleware/jwt.middleware");
@@ -28,8 +28,8 @@ app.use("/api", indexRoutes);
 const authRoutes = require("./routes/auth.routes");
 app.use("/auth", authRoutes);
 
-const babyRoutes = require("./routes/baby.routes")
-app.use("/api", isAuthenticated, babyRoutes) 
+const albumRoutes = require("./routes/album.routes")
+app.use("/api", isAuthenticated, albumRoutes) 
 
 const eventRoutes = require("./routes/event.routes")
 app.use("/api", isAuthenticated, eventRoutes)
