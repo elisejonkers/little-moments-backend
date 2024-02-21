@@ -2,8 +2,8 @@ const router = require("express").Router()
 const Album = require("../models/Album.model")
 
 router.get("/albums", (req, res, next) => {
-    console.log("this is albums", req.payload)
-    Album.find({}) //ADD CREATED BY USER
+    console.log("this is albums", req.payload._id)
+    Album.find({createdBy: req.payload._id}) //ADD CREATED BY USER
     .then((albumsArr) => {
         res.status(200).json(albumsArr)
     })
@@ -36,7 +36,7 @@ router.post("/albums", (req, res, next) => {
         weight
     }
 
-    Album.create({...newRequestBody}) //ADD CREATED BY USER
+    Album.create({...newRequestBody, createdBy: req.payload._id}) //ADD CREATED BY USER
     .then((createdAlbum) => {
         res.status(201).json(createdAlbum)
     })
@@ -56,7 +56,7 @@ router.put("/albums/:albumId", (req, res, next) => {
         weight
     }
 
-    Album.findByIdAndUpdate(albumId, {...newRequestBody}, {new:true}) //ADD CREATED BY USER
+    Album.findByIdAndUpdate(albumId, {...newRequestBody, createdBy: req.payload._id}, {new:true}) //ADD CREATED BY USER
     .then((updatedAlbum) => {
         res.status(200).json(updatedAlbum)
     })

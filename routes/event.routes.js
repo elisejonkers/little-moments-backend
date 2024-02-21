@@ -1,9 +1,10 @@
 const router = require("express").Router()
 const Event = require("../models/Event.model")
 
-router.get("/events", (req, res, next) => {
+router.get("/albums/:albumId/events", (req, res, next) => {
+    const { albumId } = req.params
     
-    Event.find({}) //ADD CREATED BY USER
+    Event.find({albumID: albumId}) //ADD CREATED BY USER
     .then((eventsArr) => {
         res.status(200).json(eventsArr)
     })
@@ -12,27 +13,28 @@ router.get("/events", (req, res, next) => {
     })
 })
 
-router.get("/events/:eventId", (req, res, next) => {
-    const { eventId } = req.params
+// router.get("/albums/:albumId/events/:eventId", (req, res, next) => {
+//     const { eventId } = req.params
     
-    Event.findById(eventId)
-    .then((eventDetails) => {
-        res.status(200).json(eventDetails)
-    })
-    .catch((error) => {
-        next(error)
-    })
-})
+//     Event.findById(eventId)
+//     .then((eventDetails) => {
+//         res.status(200).json(eventDetails)
+//     })
+//     .catch((error) => {
+//         next(error)
+//     })
+// })
 
-router.post("/events", (req, res, next) => {
+router.post("/albums/:albumId/events", (req, res, next) => {
     console.log("this is post events")
-    const { category, title, date, description } = req.body
+    const { category, title, date, description, albumID } = req.body
 
     const newRequestBody = {
         category,
         title,
         date,
-        description
+        description,
+        albumID
     }
 
     Event.create({...newRequestBody}) //ADD CREATED BY USER
@@ -45,7 +47,7 @@ router.post("/events", (req, res, next) => {
     })
 })
 
-router.put("/events/:eventId", (req, res, next) => {
+router.put("/albums/:albumId/events/:eventId", (req, res, next) => {
     const { eventId } = req.params
     const { category, title, date, description } = req.body
     const newRequestBody = {
@@ -64,7 +66,7 @@ router.put("/events/:eventId", (req, res, next) => {
     })
 })
 
-router.delete("/events/:eventId", (req, res, next) => {
+router.delete("/albums/:albumId/events/:eventId", (req, res, next) => {
     const { eventId } = req.params
     
     Event.findByIdAndDelete(eventId)
