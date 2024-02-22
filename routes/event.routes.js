@@ -4,7 +4,7 @@ const Event = require("../models/Event.model")
 router.get("/albums/:albumId/events", (req, res, next) => {
     const { albumId } = req.params
     
-    Event.find({albumID: albumId}) //ADD CREATED BY USER
+    Event.find({album: albumId}) //ADD CREATED BY USER
     .then((eventsArr) => {
         res.status(200).json(eventsArr)
     })
@@ -13,28 +13,28 @@ router.get("/albums/:albumId/events", (req, res, next) => {
     })
 })
 
-// router.get("/albums/:albumId/events/:eventId", (req, res, next) => {
-//     const { eventId } = req.params
+router.get("/albums/:albumId/events/:eventId", (req, res, next) => {
+    const { eventId } = req.params
     
-//     Event.findById(eventId)
-//     .then((eventDetails) => {
-//         res.status(200).json(eventDetails)
-//     })
-//     .catch((error) => {
-//         next(error)
-//     })
-// })
+    Event.findById(eventId)
+    .then((eventDetails) => {
+        res.status(200).json(eventDetails)
+    })
+    .catch((error) => {
+        next(error)
+    })
+})
 
 router.post("/albums/:albumId/events", (req, res, next) => {
     console.log("this is post events")
-    const { category, title, date, description, albumID } = req.body
+    const { category, title, date, description, album } = req.body
 
     const newRequestBody = {
         category,
         title,
         date,
         description,
-        albumID
+        album
     }
 
     Event.create({...newRequestBody}) //ADD CREATED BY USER
@@ -49,12 +49,13 @@ router.post("/albums/:albumId/events", (req, res, next) => {
 
 router.put("/albums/:albumId/events/:eventId", (req, res, next) => {
     const { eventId } = req.params
-    const { category, title, date, description } = req.body
+    const { category, title, date, description, albumID } = req.body
     const newRequestBody = {
         category,
         title,
         date,
-        description
+        description,
+        albumID
     }
 
     Event.findByIdAndUpdate(eventId, {...newRequestBody}, {new: true}) //ADD CREATED BY USER

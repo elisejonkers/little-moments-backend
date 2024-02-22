@@ -1,5 +1,6 @@
 const router = require("express").Router()
 const Album = require("../models/Album.model")
+const Event = require("../models/Event.model")
 
 router.get("/albums", (req, res, next) => {
     console.log("this is albums", req.payload._id)
@@ -67,8 +68,12 @@ router.put("/albums/:albumId", (req, res, next) => {
 
 router.delete("/albums/:albumId", (req, res, next) => {
     const { albumId } = req.params
-    
-    Album.findByIdAndDelete(albumId)
+
+    Event.deleteMany({ album: albumId})
+    .then(() => {
+        console.log("associated events deleted")
+        return Album.findByIdAndDelete(albumId)
+    })
     .then(() => {
         console.log("album deleted")
         res.status(204).send()
