@@ -23,9 +23,13 @@ const eventSchema = new Schema(
       maxLength: 1000
     }, 
     // Add the option to add a picture??
-    albumID: {
-      type: String,
-      required: [true, "albumID is required"]
+    // albumID: {
+    //   type: String,
+    //   required: [true, "albumID is required"]
+    // },
+    album: {
+      type: Schema.Types.ObjectId,
+      ref: "Album"
     },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
