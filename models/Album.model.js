@@ -26,6 +26,9 @@ const albumSchema = new Schema(
     type: Number,
     min: 0
    },
+   imageURL: {
+    type: String,
+   },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
