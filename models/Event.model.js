@@ -31,6 +31,9 @@ const eventSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "Album"
     },
+    imageURL: {
+      type: String,
+    },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",

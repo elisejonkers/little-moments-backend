@@ -1,5 +1,6 @@
 const router = require("express").Router()
 const Event = require("../models/Event.model")
+const fileUploader = require("../config/cloudinary.config")
 
 router.get("/albums/:albumId/events", (req, res, next) => {
     const { albumId } = req.params
@@ -25,16 +26,28 @@ router.get("/albums/:albumId/events/:eventId", (req, res, next) => {
     })
 })
 
+router.post("/upload", fileUploader.single("imageURL"), (req, res, next) => {
+    console.log("file is: ", req.file)
+
+    if (!req.file) {
+        next (new Error ("No file uploaded!"))
+        return;
+    }
+
+    res.json({fileURL: req.file.path})
+})
+
 router.post("/albums/:albumId/events", (req, res, next) => {
     console.log("this is post events")
-    const { category, title, date, description, album } = req.body
+    const { category, title, date, description, album, imageURL } = req.body
 
     const newRequestBody = {
         category,
         title,
         date,
         description,
-        album
+        album, 
+        imageURL
     }
 
     Event.create({...newRequestBody}) //ADD CREATED BY USER
@@ -49,13 +62,14 @@ router.post("/albums/:albumId/events", (req, res, next) => {
 
 router.put("/albums/:albumId/events/:eventId", (req, res, next) => {
     const { eventId } = req.params
-    const { category, title, date, description, albumID } = req.body
+    const { category, title, date, description, albumID, imageURL } = req.body
     const newRequestBody = {
         category,
         title,
         date,
         description,
-        albumID
+        albumID, 
+        imageURL
     }
 
     Event.findByIdAndUpdate(eventId, {...newRequestBody}, {new: true}) //ADD CREATED BY USER
