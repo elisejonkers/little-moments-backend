@@ -5,8 +5,9 @@ const fileUploader = require("../config/cloudinary.config")
 router.get("/albums/:albumId/events", (req, res, next) => {
     const { albumId } = req.params
     
-    Event.find({album: albumId}) //ADD CREATED BY USER
+    Event.find({album: albumId}).sort('date') //ADD CREATED BY USER
     .then((eventsArr) => {
+        console.log(eventsArr)
         res.status(200).json(eventsArr)
     })
     .catch((error) => {
